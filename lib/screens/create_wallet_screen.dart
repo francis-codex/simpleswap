@@ -110,7 +110,7 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const HomeSccreen(), // Navigate to ScreenTwo
+                                  const HomeScreen(), // Navigate to ScreenTwo
                             ),
                           );
                         },
@@ -126,7 +126,9 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "NunitoSans",
                               ),
+                                
                             )
+  
                           ],
                         ),
                       ),
