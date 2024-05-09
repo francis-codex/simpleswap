@@ -1,6 +1,51 @@
+/// Imports
+
+// ignore_for_file: avoid_print
+
+// Solana imports 
+import 'package:provider/provider.dart';
+// ignore: unused_import
+import 'package:solana_web3/programs.dart';
+import 'package:solana_web3/solana_web3.dart' as web3;
+
+// Privider Imports 
+// ignore: unused_import
+import 'package:solana/solana.dart';
+
+
+
 import 'package:flutter/material.dart';
 import 'package:simpleswap/screens/home_screen.dart';
+import 'package:solana_web3/solana_web3.dart';
 
+// Prividers
+class KeyPairProvider extends ChangeNotifier {
+  Keypair? keyPair;
+
+  void setKeyPair(Keypair newKeyPair) {
+    keyPair = newKeyPair;
+    notifyListeners();
+  }
+}
+
+// ignore: no_leading_underscores_for_local_identifiers
+void main(final List<String> _arguments) async {
+
+    // Create a connection to the devnet cluster.
+    final cluster = web3.Cluster.devnet;
+    final connection = web3.Connection(cluster);
+
+    print('Creating accounts...\n');
+
+    // Create a new wallet to transfer tokens from.
+    final wallet1 = web3.Keypair.generateSync();
+    final address1 = wallet1.pubkey;
+
+          // Check the account balances before making the transfer.
+    final balance = await connection.getBalance(wallet1.pubkey);
+    print('Account $address1 has an initial balance of $balance lamports.');   
+
+}
 class CreateWalletScreen extends StatefulWidget {
   const CreateWalletScreen({super.key});
 
@@ -11,9 +56,9 @@ class CreateWalletScreen extends StatefulWidget {
 class _CreateWalletScreenState extends State<CreateWalletScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+    return ChangeNotifierProvider(
+      create: (context) => KeyPairProvider(), // Provide the KeyPairProvider
+      child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
@@ -92,7 +137,7 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
+ 
