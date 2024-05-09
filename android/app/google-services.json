@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "873485441003",
+    "project_id": "simpleswap-48af1",
+    "storage_bucket": "simpleswap-48af1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873485441003:android:88743f3e8983b919822bae",
+        "android_client_info": {
+          "package_name": "com.example.simpleswap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873485441003-cvo38pbd6kb1de8q2f2i8g2j2hi7jum3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9HB37rRmF5iFX5-vfjYhGRNtKMtCt-2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873485441003-cvo38pbd6kb1de8q2f2i8g2j2hi7jum3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "873485441003-u57vmneih3hpsgnb0jp8cgbp1mvq7i2b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.simpleswap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
