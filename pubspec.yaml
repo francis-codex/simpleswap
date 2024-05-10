@@ -44,6 +44,7 @@ dependencies:
   borsh_annotation: ^0.3.1+5
   firebase_auth: ^4.19.5  # Firebase Authentication
   provider: ^6.1.2
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
