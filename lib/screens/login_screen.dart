@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpleswap/screens/create_wallet_screen.dart';
-
+import 'package:simpleswap/shared/utils/auth_service.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -62,7 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await AuthService().signInWithGoogle(); // add a loader here
                           Navigator.push(
                             context,
                             MaterialPageRoute(

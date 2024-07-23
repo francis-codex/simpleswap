@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class HomeSccreen extends StatefulWidget {
-  const HomeSccreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomeSccreen> createState() => _HomeSccreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 final Map<String, String> currencyImages = {
@@ -36,7 +36,7 @@ String shortenWithAsterisks(String text, int maxLength) {
 String address1 = 'address1';
 String shortenedText = shortenWithAsterisks(address1, 15);
 
-class _HomeSccreenState extends State<HomeSccreen> {
+class _HomeScreenState extends State<HomeScreen> {
   void _showModal() {
     showDialog(
       context: context,
