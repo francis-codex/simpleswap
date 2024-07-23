@@ -1,64 +1,73 @@
-/// Imports
-
 // ignore_for_file: avoid_print
 
-// Solana imports 
-import 'package:provider/provider.dart';
-// ignore: unused_import
-import 'package:solana_web3/programs.dart';
-import 'package:solana_web3/solana_web3.dart' as web3;
-
-// Privider Imports 
-// ignore: unused_import
-import 'package:solana/solana.dart';
-
-
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:solana_web3/solana_web3.dart' as web3;
 import 'package:simpleswap/screens/home_screen.dart';
 import 'package:solana_web3/solana_web3.dart';
 
-// Prividers
-class KeyPairProvider extends ChangeNotifier {
-  Keypair? keyPair;
 
-  void setKeyPair(Keypair newKeyPair) {
+// Providers
+class KeyPairProvider extends ChangeNotifier {
+  web3.Keypair? keyPair;
+
+  void setKeyPair(web3.Keypair newKeyPair) {
     keyPair = newKeyPair;
     notifyListeners();
   }
 }
 
-// ignore: no_leading_underscores_for_local_identifiers
-void main(final List<String> _arguments) async {
+void main() async {
+  // Create a connection to the devnet cluster.
+  final cluster = web3.Cluster.testnet;
+  final connection = web3.Connection(cluster);
 
-    // Create a connection to the devnet cluster.
-    final cluster = web3.Cluster.devnet;
-    final connection = web3.Connection(cluster);
+  print('Creating accounts...\n');
 
-    print('Creating accounts...\n');
+  // Create a new wallet to transfer tokens from.
+  final wallet1 = web3.Keypair.generateSync();
+  final address1 = wallet1.pubkey;
 
-    // Create a new wallet to transfer tokens from.
-    final wallet1 = web3.Keypair.generateSync();
-    final address1 = wallet1.pubkey;
+  // Store the address in the global variable
 
-          // Check the account balances before making the transfer.
-    final balance = await connection.getBalance(wallet1.pubkey);
-    print('Account $address1 has an initial balance of $balance lamports.');   
+  // Fund the sending wallet.
+    await connection.requestAndConfirmAirdrop(
+      wallet1.pubkey, 
+      solToLamports(2).toInt(),
+    );
 
+  // Check the account balances before making the transfer.
+  final balance = await connection.getBalance(wallet1.pubkey);
+  print('Account $address1 has an initial balance of $balance lamports.');
+
+  runApp(const MyApp());
 }
-class CreateWalletScreen extends StatefulWidget {
-  const CreateWalletScreen({super.key});
 
-  @override
-  State<CreateWalletScreen> createState() => _CreateWalletScreenState();
-}
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-class _CreateWalletScreenState extends State<CreateWalletScreen> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => KeyPairProvider(), // Provide the KeyPairProvider
-      child: Container(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Solana Wallet',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const CreateWalletScreen(),
+    );
+  }
+}
+
+class CreateWalletScreen extends StatelessWidget {
+  const CreateWalletScreen({super.key});
+
+    @override
+  Widget build(BuildContext context) {
+      return ChangeNotifierProvider(
+      create: (context) => KeyPairProvider(),
+      child: Scaffold(
+        body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
@@ -73,6 +82,7 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                 bottom: 90,
                 left: 0,
                 right: 0,
+                child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -109,35 +119,33 @@ class _CreateWalletScreenState extends State<CreateWalletScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const HomeSccreen(), // Navigate to ScreenTwo
+                              builder: (context) => const HomeSccreen(),
                             ),
                           );
                         },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Create a new wallet",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF101010),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "NunitoSans",
-                              ),
-                            )
-                          ],
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            "Create a new wallet",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF101010),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "NunitoSans",
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
+                ),
               ),
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }
- 

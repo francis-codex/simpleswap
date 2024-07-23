@@ -33,8 +33,8 @@ String shortenWithAsterisks(String text, int maxLength) {
   }
 }
 
-String solAddr = '34567898765fgbhg';
-String shortenedText = shortenWithAsterisks(solAddr, 15);
+String address1 = 'address1';
+String shortenedText = shortenWithAsterisks(address1, 15);
 
 class _HomeSccreenState extends State<HomeSccreen> {
   void _showModal() {
@@ -120,11 +120,12 @@ class _HomeSccreenState extends State<HomeSccreen> {
           ),
           child: Container(
             color: Colors.black.withOpacity(0.8),
+            child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                    width: 173,
+                    width: 175,
                     child: ListTile(
                       leading: Image.asset("assets/images/profile-circle.png"),
                       subtitle: Text(
@@ -527,14 +528,11 @@ class _HomeSccreenState extends State<HomeSccreen> {
                                 fontSize: 14),
                           )
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Opacity(
+                 Opacity(
                     opacity: isTextFieldEmpty ? 0.3 : 1.0,
                     child: /* Container(
                     child: ElevatedButton(
@@ -604,16 +602,14 @@ class _HomeSccreenState extends State<HomeSccreen> {
                                     ? Image.asset(
                                         "assets/images/grp_44.png",
                                       )
-                                    : Stack(
-                                        children: [
-                                          Positioned(
-                                            right: 0,
-                                            child: Image.asset(
-                                              "assets/images/grp_44.png",
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                    : Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                       Image.asset(
+                                             "assets/images/grp_44.png",
+                                   ),
+                                 ],
+                                ),
                               ),
                               Text(
                                 _displayTxt,
@@ -635,6 +631,7 @@ class _HomeSccreenState extends State<HomeSccreen> {
                       ),
                     )),
               ],
+            ),
             ),
           ),
         ),
